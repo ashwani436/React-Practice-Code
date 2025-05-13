@@ -1,6 +1,6 @@
 import { useState, React } from "react";
 import PreventRerendring from "./components/PreventRendering/PreventRerendring";
-import ContextParent from "./components/ContextApi/ContextParent";
+import ContextParent, { UserProvider } from "./components/ContextApi/UserProvider";
 import ComponentHasError from "./components/ErrorBoundry/ComponentHasError";
 import ErrorBoundary from "./components/ErrorBoundry/ErrorBoundry";
 import TempParent from "./components/UseMemoExample/TempConvertor";
@@ -21,7 +21,7 @@ const ProtectedDashboard = withAuth(Dashboard);
 
 const product = await axiosClient.get('/products/123');
 
-//We use the withAuth HOC to protect routes or components by checking if a user is authenticated before rendering them.
+// We use the withAuth HOC to protect routes or components by checking if a user is authenticated before rendering them.
 // Reusable Login Logic Instead of writing auth checks in every component, we use withAuth() once and wrap any component we want to protect.
 
 
@@ -40,8 +40,11 @@ function App() {
   
       
       {/*********************************** Context API ************/}
-      {/* <ContextParent/> */}
-      
+         {/* Step 4: Wrap your app with the UserProvider */}
+                  <UserProvider>
+                    <Profile />
+                  </UserProvider>
+                    
       {/* ******************************** ERROR BOUNDRY*******************************************/}
       {/* <ErrorBoundary>
         <ComponentHasError />
@@ -49,14 +52,13 @@ function App() {
       
       
       {/* HOC */}
-      {/* <h1>Higher Order Component</h1>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<ProtectedDashboard />} />
-        </Routes>
-      </BrowserRouter> */}
-      <Todo/>
+          {/* <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<ProtectedDashboard />} />
+            <Route path="/settings" element={<ProtectedSettings />} />
+            <Route path="/profile" element={<ProtectedProfile />} />
+          </Routes>
 
     
       {/* <Form /> */}
